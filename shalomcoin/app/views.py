@@ -44,7 +44,22 @@ class Blockchain:
     
     def is_chain_valid(self,chain):
         previous_block = chain[0]
-        
+        block_index = 1
+        while block_index < len(chain):
+            block = chain[block_index]
+            if block['previous_hash'] != self.hash(previous_block):
+                return False
+            previous_nonce = previous_block['nonce']
+            nonce = block['nonce']
+            hash_operation = hashlib.sha256(str(nonce**3 - previous_nonce**3).encode()).hexdigest()
+
+            if hash_operation[:4] == '0000':
+                return False
+            previous_block = block
+            block_index += 1
+
+        return True
+
         
     
 
