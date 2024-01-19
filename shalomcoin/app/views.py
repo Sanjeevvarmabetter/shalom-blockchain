@@ -90,5 +90,12 @@ def get_chain(request):
 
 #for checking if the block is valid or not
 def is_valid(request):
+    if request.method == 'GET':
+        is_valid = blockchain.is_chain_valid(blockchain.chain)
+        if is_valid:
+            response = {'message' : 'it ok bro the blockchain is good to go'}
+        else:
+            response = {'message' : 'we have a problem hero'}
 
+    return JsonResponse(response)
     
